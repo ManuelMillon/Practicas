@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -8,13 +9,19 @@ namespace Practicas
 {
     internal class Program
     {
+        const string RESPUESTA_SI = "S";
+        const string RESPUESTA_NO = "N";
         static void Main(string[] args)
         {
             //Practica1();
             //Sumar();
-            Practica2();
-
-
+            //Practica2();
+            //Practica3();
+            //Practica3DoWhile();
+            //Excepciones();
+            //ExcepcionGenerica();
+            //ExcepcionFinally();
+            Practica4();
 
 
         }
@@ -48,6 +55,8 @@ namespace Practicas
         static int suma(int numero1, int numero2) => numero1 + numero2;
         #endregion
 
+
+        #region Practica2
         static void Practica2()
         {
             const int PUEDE_CONDUCIR = 18;
@@ -78,5 +87,203 @@ namespace Practicas
 
         }
 
+        #endregion
+
+
+        #region BucleWhile
+
+        static void Practica3()
+        {
+
+
+        }
+
+
+        //QUIÉRES ENTRAR? S/N
+        //RESPUESTA: LEA DEL TECLADO.
+        //Se comrpueba respuesta. 
+        // Si respuesta = a s, vuelve a preguntar. Si no, se sale. 
+        // Y si se da una respuesta distinta, se pide que de una respuesta correcta.
+
+
+        #endregion
+        static string LeerRespuesta()
+        {
+
+
+            string respuesta = string.Empty;
+
+            Console.WriteLine("¿Quieres entrar en el bucle?");
+
+            respuesta = Console.ReadLine().ToUpper();
+
+
+            while (!respuesta.Equals(RESPUESTA_NO) && !respuesta.Equals(RESPUESTA_SI))
+            {
+                Console.WriteLine("Debes introducir N o S");
+                respuesta = Console.ReadLine().ToUpper();
+            }
+            Console.WriteLine("Has salido del bucle");
+
+            return respuesta;
+        }
+
+
+
+
+
+
+        #region DoWhile
+
+
+
+        static string Practica3DoWhile()
+        {
+            string respuesta = string.Empty;
+
+            Console.WriteLine("¿Quieres entrar en el bucle?");
+
+                do
+                {
+                respuesta = Console.ReadLine().ToUpper();
+                if (!respuesta.Equals(RESPUESTA_NO) && !respuesta.Equals(RESPUESTA_SI))
+                    Console.WriteLine("Debes introducir N o S");
+                    respuesta = Console.ReadLine().ToUpper();
+
+                } while (!respuesta.Equals(RESPUESTA_NO) && !respuesta.Equals(RESPUESTA_SI));
+                Console.WriteLine("Has salido del bucle");
+            
+            
+            return respuesta;
+
+        }
+
+        #endregion
+
+
+
+        #region Excepciones
+
+
+        static void Excepciones()
+        {
+            int valor = 1;
+            do
+            {
+
+                try
+                {
+                    Console.WriteLine("Introduce un número");
+                    valor = int.Parse(Console.ReadLine());
+                    Console.WriteLine($"Se ha leído {valor}");
+                }
+
+                catch (FormatException ex)
+                {
+                    Console.WriteLine("El formato del número no es correcto");
+
+                }
+
+                catch (OverflowException ex)
+                {
+                    Console.WriteLine("El número introducido es demasiado largo.");
+                }
+            }
+            while (valor != 0);
+        }
+        #endregion
+
+        #region Excepción Genérica
+
+        static void ExcepcionGenerica()
+        {
+            try
+            {
+                Console.WriteLine("Introduce un número");
+                int valor = int.Parse(Console.ReadLine());
+                Console.WriteLine($"Se ha leído {valor}");
+            }
+
+            catch (Exception ex)
+            {
+                Console.WriteLine("Enhorabuena, acabas de conseguir tu primer error System 32");
+
+            }
+        }
+
+        #endregion
+
+
+        #region
+
+
+        static void ExcepcionFinally()
+        {
+            try
+            {
+                Console.WriteLine("Introduce un número");
+                int valor = int.Parse(Console.ReadLine());
+                Console.WriteLine($"Se ha leído {valor}");
+            }
+
+            catch (Exception ex)
+            {
+                Console.WriteLine("Enhorabuena, acabas de conseguir tu primer error System 32");
+
+            }
+
+            finally
+            {
+
+                Console.WriteLine("Este finally sí tiene que salir");
+            }
+        }
+        #endregion
+
+
+
+        #region practica4
+        static void Practica4()
+        {
+
+            const string PATH = @"C:\Users\manol\pruebaExcepcionesPractica4DisenoInterfaces/practica4.txt";
+
+            System.IO.StreamReader archivo = null;
+            string linea = string.Empty;
+
+            try
+            {
+                archivo = new System.IO.StreamReader(PATH);
+                linea = archivo.ReadLine();
+                //Para que el sistema no se pare con los saltos de línea
+                while (linea != null)
+                {
+                    Console.WriteLine(linea);
+                    linea = archivo.ReadLine();
+                }
+            }
+
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+
+            finally
+            {
+                if (archivo != null)
+                {
+                    archivo.Close();
+                }
+
+                Console.WriteLine("Conexión con el fichero cerrada");
+            }
+
+        }
+
+
+        #endregion
+
     }
+
 }
+
